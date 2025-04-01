@@ -15,20 +15,22 @@
             <a-asset-item id="jake-glb" src="jake.glb"></a-asset-item>
         </a-assets>
 
-        <!-- Modelo 3D del museo con todos los elementos en su interior -->
+        <!-- Modelo 3D del museo con ajustes -->
         <a-entity 
             gltf-model="#museo-glb" 
-            scale="20 10 20" 
+            scale="10 10 10" <!-- Ajuste para que el museo sea más grande -->
             position="0 0 0" 
             static-body>
+            
+            <!-- Modelo Jake ajustado dentro del museo -->
             <a-entity 
                 gltf-model="#jake-glb" 
-                scale="1 1 1" 
-                position="0 0 0">
+                scale="0.5 0.5 0.5" <!-- Jake reducido para encajar dentro -->
+                position="0 1 0"> <!-- Jake colocado sobre el suelo del museo -->
             </a-entity>
-          
-            <!-- Cámara con controles móviles -->
-            <a-entity id="rig" position="0 50 0">
+
+            <!-- Cámara ajustada dentro del museo -->
+            <a-entity id="rig" position="0 2 0">
                 <a-entity 
                     camera 
                     look-controls 
@@ -50,18 +52,18 @@
 
                             // Movimiento adelante/atrás
                             if (beta > 15) {
-                                el.object3D.position.z -= 1;
+                                el.object3D.position.z -= 0.5; // Ajustado para un movimiento más fluido
                             }
                             if (beta < -15) {
-                                el.object3D.position.z += 1;
+                                el.object3D.position.z += 0.5;
                             }
 
                             // Movimiento izquierda/derecha
                             if (gamma > 10) {
-                                el.object3D.position.x += 1;
+                                el.object3D.position.x += 0.5;
                             }
                             if (gamma < -10) {
-                                el.object3D.position.x -= 1;
+                                el.object3D.position.x -= 0.5;
                             }
                         });
                     }
