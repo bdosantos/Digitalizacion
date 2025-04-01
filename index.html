@@ -3,32 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grupo Creativo</title>
-    <meta name="author" content="Grupo Creativo">
+    <title>Museo</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
-    <script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.min.js"></script>
 </head>
 <body>
-    <a-scene physics="debug: false">
+    <a-scene vr-mode-ui="enabled: true">
         <!-- Carga de modelos -->
         <a-assets>
             <a-asset-item id="museo-glb" src="museo.glb"></a-asset-item>
         </a-assets>
 
-        <!-- Modelo 3D del museo, centrado -->
-        <a-entity gltf-model="#museo-glb" scale="10 10 10" position="0 0 0" static-body></a-entity>
+        <!-- Modelo 3D del museo con todos los elementos en su interior -->
+        <a-entity 
+            gltf-model="#museo-glb" 
+            scale="20 10 20" 
+            position="0 0 0" 
+            static-body>
+            
+            <!-- Cámara con controles móviles -->
+            <a-entity id="rig" position="0 50 0">
+                <a-entity 
+                    camera 
+                    look-controls 
+                    wasd-controls="acceleration: 200">
+                </a-entity>
+            </a-entity>
+            
+            <!-- Permitir movimiento con orientación del dispositivo -->
+            <a-entity mobile-movement></a-entity>
 
-        <!-- Cámara posicionada cerca de un vértice del museo con controles -->
-        <a-entity camera look-controls wasd-controls="acceleration: 200" position="-20 3 -20"></a-entity>
-      
-        <!-- Luz ambiental reducida para iluminar suavemente el entorno -->
-        <a-light type="ambient" color="#FFFFFF" intensity="0.2"></a-light>
+            <!-- Script para movimiento con orientación del dispositivo -->
+            <script>
+                AFRAME.registerComponent('mobile-movement', {
+                    init: function () {
+                        const el = this.el;
+                        window.addEventListener('deviceorientation', function (event) {
+                            const beta = event.beta; // Inclinación frontal-trasera
+                            const gamma = event.gamma; // Inclinación lateral
 
-        <!-- Luces puntuales para iluminar el interior del museo -->
-        <a-light type="point" color="#FFFFFF" intensity="0.5" position="0 4 0"></a-light>
-        <a-light type="point" color="#FFFFFF" intensity="0.5" position="10 4 10"></a-light>
-        <a-light type="point" color="#FFFFFF" intensity="0.7" position="5 10 5" distance="50" decay="2"></a-light>
+                            // Movimiento adelante/atrás
+                            if (beta > 15) {
+                                el.object3D.position.z -= 1;
+                            }
+                            if (beta < -15) {
+                                el.object3D.position.z += 1;
+                            }
+
+                            // Movimiento izquierda/derecha
+                            if (gamma > 10) {
+                                el.object3D.position.x += 1;
+                            }
+                            if (gamma < -10) {
+                                el.object3D.position.x -= 1;
+                            }
+                        });
+                    }
+                });
+            </script>
+        </a-entity>
+
+        <!-- Iluminación mejorada -->
+        <a-light type="ambient" color="#FFFFFF" intensity="1"></a-light>
+        <a-light type="point" position="10 10 10" intensity="2" color="#FFFFFF"></a-light>
+        <a-light type="point" position="-10 10 10" intensity="2" color="#FFFFFF"></a-light>
+        <a-light type="point" position="0 5 0" intensity="1.5" color="#FFFFFF"></a-light>
     </a-scene>
 </body>
 </html>
