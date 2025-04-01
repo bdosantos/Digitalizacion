@@ -18,7 +18,7 @@
         <!-- Modelo 3D del museo con ajustes -->
         <a-entity 
             gltf-model="#museo-glb" 
-            scale="10 10 10" <!-- Ajuste para que el museo sea más grande -->
+            scale="20 10 20" <!-- Ajuste para que el museo sea más grande -->
             position="0 0 0" 
             static-body>
             
@@ -30,7 +30,7 @@
             </a-entity>
 
             <!-- Cámara ajustada dentro del museo -->
-            <a-entity id="rig" position="0 2 0">
+            <a-entity id="rig" position="0 50 0">
                 <a-entity 
                     camera 
                     look-controls 
@@ -52,18 +52,18 @@
 
                             // Movimiento adelante/atrás
                             if (beta > 15) {
-                                el.object3D.position.z -= 0.5; // Ajustado para un movimiento más fluido
+                                el.object3D.position.z -= 2; // Ajustado para un movimiento más fluido
                             }
                             if (beta < -15) {
-                                el.object3D.position.z += 0.5;
+                                el.object3D.position.z += 2;
                             }
 
                             // Movimiento izquierda/derecha
                             if (gamma > 10) {
-                                el.object3D.position.x += 0.5;
+                                el.object3D.position.x += 2;
                             }
                             if (gamma < -10) {
-                                el.object3D.position.x -= 0.5;
+                                el.object3D.position.x -= 2;
                             }
                         });
                     }
