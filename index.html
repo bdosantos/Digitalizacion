@@ -12,6 +12,7 @@
         <!-- Carga de modelos -->
         <a-assets>
             <a-asset-item id="museo-glb" src="museo.glb"></a-asset-item>
+            <a-asset-item id="jake-glb" src="jake.glb"></a-asset-item>
         </a-assets>
 
         <!-- Modelo 3D del museo con todos los elementos en su interior -->
@@ -20,7 +21,12 @@
             scale="20 10 20" 
             position="0 0 0" 
             static-body>
-            
+            <a-entity 
+                gltf-model="#jake-glb" 
+                scale="1 1 1" 
+                position="0 0 0">
+            </a-entity>
+          
             <!-- Cámara con controles móviles -->
             <a-entity id="rig" position="0 50 0">
                 <a-entity 
